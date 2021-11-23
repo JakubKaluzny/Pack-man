@@ -25,7 +25,7 @@ class TripDataActivity : AppCompatActivity() {
     fun goToListActivity(view: View) {
         val inputline = findViewById<EditText>(R.id.dlugoscWyjazduID)
         setPreference("DLUGOSC_WYJAZDU", inputline.text.toString())
-        val intent = Intent(this, ListActivity::class.java)
+        val intent = Intent(this, ExpandableListActivity::class.java)
         startActivity(intent)
     }
 }

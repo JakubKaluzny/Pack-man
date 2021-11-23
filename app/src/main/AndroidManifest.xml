@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Packman">
         <activity
+            android:name=".ExpandableListActivity"
+            android:exported="true" />
+        <activity
             android:name=".UserLuggageActivity"
             android:exported="false" />
         <activity

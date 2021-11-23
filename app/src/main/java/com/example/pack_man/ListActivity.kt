@@ -14,7 +14,7 @@ class ListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list)
 
         val przeniesionyText = getPreference("DLUGOSC_WYJAZDU")
-        findViewById<TextView>(R.id.testText).apply { text = przeniesionyText }
+//        findViewById<TextView>(R.id.testText).apply { text = przeniesionyText }
 
     }
 
@@ -27,5 +27,6 @@ class ListActivity : AppCompatActivity() {
         val intent = Intent(this,UserLuggageActivity::class.java)
         startActivity(intent)
     }
+
 
 }
