@@ -1,49 +1,66 @@
 package com.example.pack_man;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.Toast;
+import android.widget.TextView;
+
+
+import android.content.Context;
 
 public class ExpandableListActivity extends Activity {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    HashMap<String, List<MyPair>> listDataChild;
+    int tripLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expandable_list);
-
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
         // preparing list data
         prepareListData();
 
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
+
+
+
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                TextView text = v.findViewById(R.id.ListItemCount);
+                MyPair child = (MyPair)listAdapter.getChild(groupPosition,childPosition);
+                child.setCount(getPreference("DLUGOSC_WYJAZDU"));
+                text.setText(child.getCount());
+                return false;
+            }
+        });
     }
 
     /*
      * Preparing the list data
      */
     private void prepareListData() {
+        tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
+
         listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        //List<MyPair>>
+        listDataChild = new HashMap<String, List<MyPair>>();
 
         // Adding child data
         listDataHeader.add("Top 250");
@@ -51,32 +68,36 @@ public class ExpandableListActivity extends Activity {
         listDataHeader.add("Coming Soon..");
 
         // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
+        //Pair<String, Integer> top250Pair = new MyPair("asd", 2);
+        List<MyPair> top250 = new ArrayList<MyPair>();
+        top250.add(new MyPair("Twoja Stara", "" + (tripLength + 2)));
+        top250.add(new MyPair("Chaniecki", "" + (tripLength * 3)));
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
+        List<MyPair> nowShowing = new ArrayList<MyPair>();
+        nowShowing.add(new MyPair("Duch", "" + (tripLength * 6)));
+        nowShowing.add(new MyPair("Despicable Me 2", "4"));
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
+        List<MyPair> comingSoon = new ArrayList<MyPair>();
+        comingSoon.add(new MyPair("2 Guns", "5"));
+        comingSoon.add(new MyPair("The Smurfs 2", "6"));
+
+
+        //HashMap<String, List<MyPair>> listDataChild = null;
+
+        //comingSoon.add(getPreference("DLUGOSC_WYJAZDU"));
 
         listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
         listDataChild.put(listDataHeader.get(1), nowShowing);
         listDataChild.put(listDataHeader.get(2), comingSoon);
+
+
+        //System.out.println("START");
+        //System.out.println(getPreference("DLUGOSC_WYJAZDU"));
+        //countView.setText(getPreference("DLUGOSC_WYJAZDU"));
+    }
+
+    private String getPreference(String key) {
+        SharedPreferences sharedPref = getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE);
+        return sharedPref.getString(key, null);
     }
 }

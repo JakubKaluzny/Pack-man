@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    //private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, List<MyPair>> _listDataChild;
+    //private String _getPreference;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
+                                 HashMap<String, List<MyPair>> _listDataChild
+                                 /*HashMap<String, List<String>> listChildData, String getPreference*/) {
         this._context = context;
         this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+        this._listDataChild = _listDataChild;
+        //this._getPreference = getPreference;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        MyPair child = (MyPair) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -50,10 +55,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
+        txtListChild.setText(child.getName());
 
-        txtListChild.setText(childText);
+        TextView count = (TextView) convertView.findViewById(R.id.ListItemCount);
+        count.setText(child.getCount());
+
         return convertView;
     }
+
+
 
     @Override
     public int getChildrenCount(int groupPosition) {
