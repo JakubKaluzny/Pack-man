@@ -7,8 +7,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import android.app.Activity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.example.pack_man.BasicList;
 
@@ -19,9 +26,9 @@ public class ExpandableListActivity extends Activity {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    //int tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
-    List<String> listDataHeader = BasicList.getListDataHeader();
-    HashMap<String, List<MyPair>> listDataChild = BasicList.getListDataChild(3);
+    int tripLength;
+    List<String> listDataHeader;
+    HashMap<String, List<MyPair>> listDataChild;
 
 
 
@@ -29,15 +36,13 @@ public class ExpandableListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expandable_list);
-        // get the listview
+
+        tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
+        listDataHeader = BasicList.getListDataHeader();
+        listDataChild = BasicList.getListDataChild(tripLength);
+
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
-
-        // preparing list data
-        //prepareListData();
-
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
-
-        // setting list adapter
         expListView.setAdapter(listAdapter);
 
 
@@ -48,56 +53,31 @@ public class ExpandableListActivity extends Activity {
                                         int groupPosition, int childPosition, long id) {
                 TextView text = v.findViewById(R.id.ListItemCount);
                 MyPair child = (MyPair)listAdapter.getChild(groupPosition,childPosition);
-                child.setCount("" + 5);
-                text.setText(child.getCount());
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_on_list_click, null);
+                //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int width = 600;
+                int height = 800;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setElevation(50);
+                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+                Button popupButton = popupView.findViewById(R.id.applyChangesID);
+                popupButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText inputline = popupView.findViewById(R.id.newCountID);
+                        String newCount = inputline.getText().toString();
+                        child.setCount(newCount);
+                        text.setText(child.getCount());
+                        popupWindow.dismiss();
+                    }
+                });
                 return false;
             }
         });
     }
-
-    /*
-     * Preparing the list data
-     */
-//    private void prepareListData() {
-//        tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
-//
-//        listDataHeader = new ArrayList<String>();
-//        //List<MyPair>>
-//        listDataChild = new HashMap<String, List<MyPair>>();
-//
-//        // Adding child data
-//        listDataHeader.add("Top 250");
-//        listDataHeader.add("Now Showing");
-//        listDataHeader.add("Coming Soon..");
-//
-//        // Adding child data
-//        //Pair<String, Integer> top250Pair = new MyPair("asd", 2);
-//        List<MyPair> top250 = new ArrayList<MyPair>();
-//        top250.add(new MyPair("Twoja Stara", "" + (tripLength + 2)));
-//        top250.add(new MyPair("Chaniecki", "" + (tripLength * 3)));
-//
-//        List<MyPair> nowShowing = new ArrayList<MyPair>();
-//        nowShowing.add(new MyPair("Duch", "" + (tripLength * 6)));
-//        nowShowing.add(new MyPair("Despicable Me 2", "4"));
-//
-//        List<MyPair> comingSoon = new ArrayList<MyPair>();
-//        comingSoon.add(new MyPair("2 Guns", "5"));
-//        comingSoon.add(new MyPair("The Smurfs 2", "6"));
-//
-//
-//        //HashMap<String, List<MyPair>> listDataChild = null;
-//
-//        //comingSoon.add(getPreference("DLUGOSC_WYJAZDU"));
-//
-//        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-//        listDataChild.put(listDataHeader.get(1), nowShowing);
-//        listDataChild.put(listDataHeader.get(2), comingSoon);
-//
-//
-//        //System.out.println("START");
-//        //System.out.println(getPreference("DLUGOSC_WYJAZDU"));
-//        //countView.setText(getPreference("DLUGOSC_WYJAZDU"));
-//    }
 
     private String getPreference(String key) {
         SharedPreferences sharedPref = getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE);

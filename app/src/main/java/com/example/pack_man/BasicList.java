@@ -40,11 +40,6 @@ public class BasicList {
             comingSoon.add(new MyPair("2 Guns", "5"));
             comingSoon.add(new MyPair("The Smurfs 2", "6"));
 
-
-            //HashMap<String, List<MyPair>> listDataChild = null;
-
-            //comingSoon.add(getPreference("DLUGOSC_WYJAZDU"));
-
             listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
             listDataChild.put(listDataHeader.get(1), nowShowing);
             listDataChild.put(listDataHeader.get(2), comingSoon);
