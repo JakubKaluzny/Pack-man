@@ -48,7 +48,7 @@ public class ExpandableListActivity extends Activity {
                                         int groupPosition, int childPosition, long id) {
                 TextView text = v.findViewById(R.id.ListItemCount);
                 MyPair child = (MyPair)listAdapter.getChild(groupPosition,childPosition);
-                child.setCount(getPreference("DLUGOSC_WYJAZDU"));
+                child.setCount("" + 5);
                 text.setText(child.getCount());
                 return false;
             }

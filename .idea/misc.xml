@@ -3,15 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Studio/Pack-man/app/src/main/res/layout/activity_expandable_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android Studio/Pack-man/app/src/main/res/layout/activity_list_testing.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android Studio/Pack-man/app/src/main/res/layout/list_group.xml" value="0.36666666666666664" />
-        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/activity_expandable_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/activity_trip_data.xml" value="0.36666666666666664" />
-        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/list_group.xml" value="0.36666666666666664" />
-        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_expandable_list.xml" value="0.240625" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_list_testing.xml" value="0.2265625" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_trip_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_user_luggage.xml" value="0.36018518518518516" />
