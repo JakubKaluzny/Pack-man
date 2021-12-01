@@ -51,10 +51,12 @@ public class ExpandableListActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                TextView text = v.findViewById(R.id.ListItemCount);
+                TextView count = v.findViewById(R.id.ListItemCount);
                 MyPair child = (MyPair)listAdapter.getChild(groupPosition,childPosition);
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_on_list_click, null);
+                EditText newCount = popupView.findViewById(R.id.newCountID);
+                newCount.setText(count.getText().toString());
                 //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int width = 600;
@@ -70,7 +72,7 @@ public class ExpandableListActivity extends Activity {
                         EditText inputline = popupView.findViewById(R.id.newCountID);
                         String newCount = inputline.getText().toString();
                         child.setCount(newCount);
-                        text.setText(child.getCount());
+                        count.setText(child.getCount());
                         popupWindow.dismiss();
                     }
                 });
