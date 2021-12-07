@@ -45,37 +45,46 @@ public class ExpandableListActivity extends Activity {
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
         expListView.setAdapter(listAdapter);
 
-
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
+
                 TextView count = v.findViewById(R.id.ListItemCount);
-                MyPair child = (MyPair)listAdapter.getChild(groupPosition,childPosition);
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_on_list_click, null);
-                EditText newCount = popupView.findViewById(R.id.newCountID);
-                newCount.setText(count.getText().toString());
-                //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int width = 600;
-                int height = 800;
-                boolean focusable = true;
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                popupWindow.setElevation(50);
-                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-                Button popupButton = popupView.findViewById(R.id.applyChangesID);
-                popupButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText inputline = popupView.findViewById(R.id.newCountID);
-                        String newCount = inputline.getText().toString();
-                        child.setCount(newCount);
-                        count.setText(child.getCount());
-                        popupWindow.dismiss();
-                    }
-                });
+                MyPair child = (MyPair) listAdapter.getChild(groupPosition, childPosition);
+
+                if (listAdapter.getChildId(groupPosition, childPosition) + 1 == listAdapter.getChildrenCount(groupPosition)) {
+                //if (childPosition + 1 == listAdapter.getChildrenCount(groupPosition)) {
+                    MyPair newElement = new MyPair("Dodaj nowy element", "+");
+
+                    BasicList.getGroupList(groupPosition).add(newElement);
+                    recreate();
+                } else {
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popup_on_list_click, null);
+                    EditText newCount = popupView.findViewById(R.id.newCountID);
+                    newCount.setText(count.getText().toString());
+                    //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int width = 600;
+                    int height = 800;
+                    boolean focusable = true;
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                    popupWindow.setElevation(50);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+                    Button popupButton = popupView.findViewById(R.id.applyChangesID);
+                    popupButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText inputline = popupView.findViewById(R.id.newCountID);
+                            String newCount = inputline.getText().toString();
+                            child.setCount(newCount);
+                            count.setText(child.getCount());
+                            popupWindow.dismiss();
+                        }
+                    });
+                }
                 return false;
             }
         });

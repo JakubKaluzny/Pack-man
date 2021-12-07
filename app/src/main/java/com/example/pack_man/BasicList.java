@@ -31,19 +31,26 @@ public class BasicList {
             List<MyPair> top250 = new ArrayList<MyPair>();
             top250.add(new MyPair("Twoja Stara", "" + (tripLength + 2)));
             top250.add(new MyPair("Chaniecki", "" + (tripLength * 3)));
+            top250.add(new MyPair("Dodaj nowy element", "+"));
 
             List<MyPair> nowShowing = new ArrayList<MyPair>();
             nowShowing.add(new MyPair("Duch", "" + (tripLength * 6)));
             nowShowing.add(new MyPair("Despicable Me 2", "4"));
+            nowShowing.add(new MyPair("Dodaj nowy element", "+"));
 
             List<MyPair> comingSoon = new ArrayList<MyPair>();
             comingSoon.add(new MyPair("2 Guns", "5"));
             comingSoon.add(new MyPair("The Smurfs 2", "6"));
+            comingSoon.add(new MyPair("Dodaj nowy element", "+"));
 
             listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
             listDataChild.put(listDataHeader.get(1), nowShowing);
             listDataChild.put(listDataHeader.get(2), comingSoon);
         }
         return listDataChild;
+    }
+
+    public static List<MyPair> getGroupList(int position) {
+        return listDataChild.get(listDataHeader.get(position));
     }
 }
