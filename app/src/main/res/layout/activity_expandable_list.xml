@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="120dp"
+    android:onClick="resetExpandableList"
     tools:context=".ExpandableListActivity">
 
     <ExpandableListView
         android:id="@+id/lvExp"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_marginBottom="50dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp" />
 
     <Button
         android:id="@+id/goNextID"
@@ -21,5 +22,14 @@
         android:text="Dalej"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/resetButtonID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetExpandableList"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

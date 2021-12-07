@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/activity_expandable_list.xml" value="0.36666666666666664" />
         <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/activity_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/list_group.xml" value="0.36666666666666664" />
         <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/popup_on_last_list_click.xml" value="0.36666666666666664" />
         <entry key="..\:/ProjektKompetencyjny/PackMan/Pack-man/app/src/main/res/layout/popup_on_list_click.xml" value="0.36666666666666664" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_expandable_list.xml" value="0.240625" />
         <entry key="..\:/Studia/5 SEM/Projekt Kompetencyjny/Pack-man/app/src/main/res/layout/activity_list.xml" value="0.36666666666666664" />
