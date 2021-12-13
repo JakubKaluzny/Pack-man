@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pack_man">
+    package="com.example.pack_man" >
 
     <application
         android:allowBackup="true"
@@ -8,26 +8,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Packman">
-        <activity
-            android:name=".ListTesting"
-            android:exported="true" />
-        <activity
-            android:name=".ExpandableListActivity"
-            android:exported="true" />
+        android:theme="@style/Theme.Packman" >
         <activity
             android:name=".UserLuggageActivity"
             android:exported="false" />
         <activity
-            android:name=".ListActivity"
-            android:exported="false" />
+            android:name=".ExpandableListActivity"
+            android:exported="true" />
         <activity
             android:name=".TripDataActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

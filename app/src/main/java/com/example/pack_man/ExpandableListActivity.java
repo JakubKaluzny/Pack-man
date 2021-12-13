@@ -140,8 +140,8 @@ public class ExpandableListActivity extends Activity {
 //        expListView.setAdapter(listAdapter);
     }
 
-    public void goToListTesting(View view){
-        Intent intent = new Intent(this, ListTesting.class);
+    public void goToUserLuggage(View view){
+        Intent intent = new Intent(this, UserLuggageActivity.class);
         startActivity(intent);
     }
 }
