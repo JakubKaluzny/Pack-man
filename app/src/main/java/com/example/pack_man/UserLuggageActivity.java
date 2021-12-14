@@ -2,7 +2,10 @@ package com.example.pack_man;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +86,27 @@ public class UserLuggageActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void testFileSaving(View view){
+        String msg = null;
+        try {
+            FileInputStream fileInputStream =  openFileInput("Code.txt");
+            int read = -1;
+            StringBuffer buffer = new StringBuffer();
+            while((read =fileInputStream.read())!= -1){
+                buffer.append((char)read);
+            }
+            Log.d("Code", buffer.toString());
+            msg = buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void goToPackingAlgorithm(View view){
+        Intent intent = new Intent(this, PackingAlgorithmActivity.class);
+        startActivity(intent);
     }
 }

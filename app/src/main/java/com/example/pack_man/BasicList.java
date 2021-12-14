@@ -29,8 +29,8 @@ public class BasicList {
             mapAlreadySet = true;
             listDataChild = new HashMap<String, List<MyPair>>();
             List<MyPair> ubrania = new ArrayList<MyPair>();
-            ubrania.add(new MyPair("Koszulki", "" + (tripLength + 2)));
-            ubrania.add(new MyPair("Spodnie", "" + (tripLength * 3)));
+            ubrania.add(new MyPair("Koszulki", "" + (tripLength)));
+            ubrania.add(new MyPair("Spodnie", "" + (tripLength)));
             ubrania.add(new MyPair("Dodaj nowy element", "+"));
 
             List<MyPair> sprzet_elekt = new ArrayList<MyPair>();
