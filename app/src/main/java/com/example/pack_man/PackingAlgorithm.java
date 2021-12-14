@@ -9,6 +9,9 @@ import java.util.Map;
 public class PackingAlgorithm {
     private ArrayList<MyPair> suitcaseList;
     private ArrayList<MyPair> realSuitcaseList;
+    private List<Integer> suitcaseIndexes;
+    private List<String> allIndexesCombinations;
+    private List<Double> suitcasesCapacity;
 
     private int tripLength;
     private List<String> categories;
@@ -18,6 +21,9 @@ public class PackingAlgorithm {
 
     public PackingAlgorithm(){
         realSuitcaseList = new ArrayList<>();
+        suitcaseIndexes = new ArrayList<>();
+        allIndexesCombinations = new ArrayList<>();
+        suitcasesCapacity = new ArrayList<>();
         itemsSizes = new LinkedHashMap<String, Double>();
         itemsSizes.put("Koszulki", 1D);
         itemsSizes.put("Spodnie", 2D);
@@ -27,7 +33,7 @@ public class PackingAlgorithm {
         itemsSizes.put("Suszarka do włosów", 1D);
     }
 
-    public Double calculateNeedeedSpace(){
+    public String calculateNeedeedSpace(){
         categories = BasicList.getListDataHeader();
         items = BasicList.getListDataChild(tripLength);
 
@@ -55,33 +61,98 @@ public class PackingAlgorithm {
             if (pair.getName().equals("Dodaj nowy element")) {
                 continue;
             }
-            realSuitcaseList.add(new MyPair(pair.getName(), "" + pair.getCount()));
+            Double suitcaseSize = Double.parseDouble(removeLastChar(pair.getCount()));
+            suitcaseSize = suitcaseSize * 1.1;
+            realSuitcaseList.add(new MyPair(pair.getName(), suitcaseSize.toString()));
         }
 
-        int listSize = realSuitcaseList.size();
-        for(int i=1; i<=listSize; i++){
-            int[] arr = { 1,2,3,4,5 };
+        for(int i=0;i<realSuitcaseList.size();i++){
+            suitcaseIndexes.add(i);
         }
-//        for(MyPair pair: realSuitcaseList){
-//
-//        }
 
-        return userItemsSpace;
+        for(int i=0 ; i<=suitcaseIndexes.size(); i++){
+            combinations(i,0, new int[i]);
+        }
+
+        for(String value: allIndexesCombinations){
+            value = value.trim();
+            Double res = 0D;
+            if(value.length()==1){
+                int index = Integer.parseInt(value);
+                MyPair suitcase = realSuitcaseList.get(index);
+                String sizeInString = suitcase.getCount();
+                Double size = Double.parseDouble(sizeInString);
+                res += size;
+            }
+            else{
+                String[] valueSplited = value.split("");
+                for(int i=0 ;i<valueSplited.length;i++){
+                    int index = Integer.parseInt(valueSplited[i]);
+                    MyPair suitcase = realSuitcaseList.get(index);
+                    String sizeInString = suitcase.getCount();
+                    Double size = Double.parseDouble(sizeInString);
+                    res += size;
+                }
+            }
+            suitcasesCapacity.add(res);
+        }
+
+        Double distance = 5000D;
+        Double bestDistance = 5000D;
+        int indexOfBestDistance = 0;
+        for(int i=0; i<suitcasesCapacity.size();i++){
+            distance = suitcasesCapacity.get(i) - userItemsSpace;
+            if(distance < 0){
+                distance = 5000D;
+                continue;
+            }
+            if(distance < bestDistance){
+                bestDistance = distance;
+                indexOfBestDistance = i;
+            }
+        }
+        if(bestDistance == 5000D){
+            return "Kup se torbe gosciu";
+        }
+        String bestIndexes = allIndexesCombinations.get(indexOfBestDistance);
+        String bestSuitcases = "";
+        if(bestIndexes.length()==1){
+            int index = Integer.parseInt(bestIndexes);
+            MyPair suitcase = suitcaseList.get(index);
+            bestSuitcases = suitcase.getName();
+        }
+        else{
+            String[] valueSplited = bestIndexes.split("");
+            for(int i=0 ;i<valueSplited.length;i++){
+                int index = Integer.parseInt(valueSplited[i]);
+                MyPair suitcase = realSuitcaseList.get(index);
+                bestSuitcases = bestSuitcases + suitcase.getName() + " ";
+            }
+        }
+
+        return bestSuitcases;
     }
 
-    private String combinations(int[] arr, int len, int startPosition, int[] result){
+    void combinations(int len, int startPosition, int[] result){
         if (len == 0){
             String str = "";
-            for(int suitcaseIndex : result)
+            for(int card : result)
             {
-                str += suitcaseIndex + " ";
+                str += card + "";
             }
-            return str;
+            if(!str.equals("")){
+                allIndexesCombinations.add(str);
+            }
+            return;
         }
-        for (int i = startPosition; i <= arr.length-len; i++){
-            result[result.length - len] = arr[i];
-            combinations(arr, len-1, i+1, result);
+        for (int i = startPosition; i <= suitcaseIndexes.size()-len; i++){
+            result[result.length - len] = suitcaseIndexes.get(i);
+            combinations(len-1, i+1, result);
         }
-        return null;
+    }
+
+    private String removeLastChar(String s)
+    {
+        return s.substring(0, s.length() - 1);
     }
 }

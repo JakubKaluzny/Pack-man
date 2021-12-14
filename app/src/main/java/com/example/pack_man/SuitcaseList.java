@@ -13,8 +13,9 @@ public class SuitcaseList {
             listAlreadySet = true;
             suitCaseList = new ArrayList<MyPair>();
 
-            suitCaseList.add(new MyPair("Walizka 1", "40L"));
-            suitCaseList.add(new MyPair("Plecak 1", "10L"));
+            suitCaseList.add(new MyPair("Walizka 1", "1L"));
+            suitCaseList.add(new MyPair("Plecak 1", "1L"));
+            suitCaseList.add(new MyPair("Plecak 2", "10L"));
             suitCaseList.add(new MyPair("Dodaj nowy element", "+"));
         }
         return suitCaseList;

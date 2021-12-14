@@ -51,7 +51,8 @@ public class PackingAlgorithmActivity extends AppCompatActivity {
 //        }
 
         PackingAlgorithm packingAlgorithm = new PackingAlgorithm();
-        Double userItemsSpace = packingAlgorithm.calculateNeedeedSpace();
+        String userItemsSpace = packingAlgorithm.calculateNeedeedSpace();
+        //String userItemsSpace = "siema";
 
         TextView text = findViewById(R.id.textListTestID);
         text.setText(userItemsSpace.toString());
