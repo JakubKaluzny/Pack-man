@@ -89,20 +89,24 @@ public class UserLuggageActivity extends AppCompatActivity {
     }
 
     public void testFileSaving(View view){
-        String msg = null;
+        File file= null;
+
+        FileOutputStream fileOutputStream = null;
         try {
-            FileInputStream fileInputStream =  openFileInput("Code.txt");
-            int read = -1;
-            StringBuffer buffer = new StringBuffer();
-            while((read =fileInputStream.read())!= -1){
-                buffer.append((char)read);
+            file = getFilesDir();
+            fileOutputStream = openFileOutput("UserList.txt", Context.MODE_PRIVATE); //JEST TEZ MODE_APPEND I KURWA WIESZ CO ROBI
+            fileOutputStream.write(TripDataParser.parseItemsDataToString().getBytes());
+            Toast.makeText(this, "Saved \n" + "Path --" + file + "\tUserList.txt", Toast.LENGTH_SHORT).show();
+            return;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            Log.d("Code", buffer.toString());
-            msg = buffer.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
     }
 
     public void goToPackingAlgorithm(View view){
