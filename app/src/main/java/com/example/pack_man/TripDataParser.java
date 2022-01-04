@@ -1,8 +1,16 @@
 package com.example.pack_man;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 public class TripDataParser {
     private static HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
@@ -24,6 +32,13 @@ public class TripDataParser {
     }
 
 
-
+    public static ArrayList<String[]> parseItemsFromFile(String wholeFile){
+        ArrayList<String[]> itemsSpecifications = new ArrayList<>();
+        String[] lines = wholeFile.split("\n");
+        for(String str: lines){
+            itemsSpecifications.add(str.split("\t"));
+        }
+        return itemsSpecifications;
+    }
 
 }

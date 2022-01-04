@@ -1,6 +1,7 @@
 package com.example.pack_man
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,9 +19,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun goToTripDataActivity(view: View) {
+    fun goToNewTripDataActivity(view: View) {
         val intent = Intent(this, TripDataActivity::class.java)
+        setPreference("NOWY_WYJAZD", "TAK")
         startActivity(intent)
+    }
+
+
+    fun goToLastTripDataActivity(view: View) {
+        val intent = Intent(this, ExpandableListActivity::class.java)
+        setPreference("NOWY_WYJAZD", "NIE")
+        startActivity(intent)
+    }
+
+
+    fun setPreference(key: String?, value: String?){
+        val sharedPref = getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE)
+        sharedPref
+            .edit()
+            .putString(key, value)
+            .apply()
     }
 
 }

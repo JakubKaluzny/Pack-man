@@ -109,6 +109,7 @@ public class UserLuggageActivity extends AppCompatActivity {
         }
     }
 
+
     public void goToPackingAlgorithm(View view){
         Intent intent = new Intent(this, PackingAlgorithmActivity.class);
         startActivity(intent);

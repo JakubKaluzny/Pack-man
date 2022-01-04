@@ -3,10 +3,13 @@ package com.example.pack_man;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +42,18 @@ public class ExpandableListActivity extends Activity {
 
         tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
         listDataHeader = BasicList.getListDataHeader();
-        listDataChild = BasicList.getListDataChild(tripLength);
+
+
+
+        String nowy_wyjazd = getPreference("NOWY_WYJAZD");
+        if(nowy_wyjazd.equals("TAK")) {
+            listDataChild = BasicList.getListDataChild(tripLength);
+        }
+        else if(nowy_wyjazd.equals("NIE")){
+            listDataChild = BasicList.getListDataChild(0);
+            BasicList.updateListData(TripDataParser.parseItemsFromFile(loadListDataFromFile()));
+        }
+
 
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
@@ -143,5 +157,22 @@ public class ExpandableListActivity extends Activity {
     public void goToUserLuggage(View view){
         Intent intent = new Intent(this, UserLuggageActivity.class);
         startActivity(intent);
+    }
+
+    public String loadListDataFromFile()
+    {
+        StringBuffer buffer = null;
+        try {
+            FileInputStream fileInputStream =  openFileInput("UserList.txt");
+            int read = -1;
+            buffer = new StringBuffer();
+            while((read =fileInputStream.read())!= -1){
+                buffer.append((char)read);
+            }
+            return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

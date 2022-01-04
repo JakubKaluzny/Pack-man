@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BasicList {
     static List<String> listDataHeader;
@@ -18,7 +19,7 @@ public class BasicList {
             listAlreadySet = true;
             listDataHeader = new ArrayList<String>();
             listDataHeader.add("Ubrania");
-            listDataHeader.add("Sprzęt elektroniczny");
+            listDataHeader.add("Sprzet elektroniczny");
             listDataHeader.add("Akcesoria");
         }
         return listDataHeader;
@@ -52,5 +53,25 @@ public class BasicList {
 
     public static List<MyPair> getGroupList(int position) {
         return listDataChild.get(listDataHeader.get(position));
+    }
+
+    public static void updateListData(ArrayList<String[]> specifications){
+        for(String[] itemsSpecifications: specifications){
+            String categoryInList = itemsSpecifications[0];
+            String itemInList = itemsSpecifications[1];
+            String countInList = itemsSpecifications[2];
+            System.out.println("\n\n\n\n\n\n" + categoryInList + "\n\n\n\n\n\n\n\n");
+            List<MyPair> items = listDataChild.get(categoryInList);
+            for(int i=0; i<items.size(); i++){
+                if(items.get(i).getName().equals(itemInList)){
+                    items.get(i).setCount(countInList);
+                    break;
+                }
+                if(i == items.size()-1){
+                    items.add(new MyPair(itemInList, countInList));
+                }
+            }
+
+        }
     }
 }
