@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class TripDataParser {
     private static HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
+    private static ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
 
     public static String parseItemsDataToString(){
         StringBuilder data = new StringBuilder();
@@ -31,6 +32,17 @@ public class TripDataParser {
         return data.toString();
     }
 
+    public static String parseSuitcaseDataToString(){
+        StringBuilder data = new StringBuilder();
+        for(MyPair pair: suitcases){
+            String suitcase = pair.getName();
+            String capacity = pair.getCount();
+            String line = suitcase + "\t" + capacity + "\n";
+            data.append(line);
+        }
+        return data.toString();
+    }
+
 
     public static ArrayList<String[]> parseItemsFromFile(String wholeFile){
         ArrayList<String[]> itemsSpecifications = new ArrayList<>();
@@ -39,6 +51,15 @@ public class TripDataParser {
             itemsSpecifications.add(str.split("\t"));
         }
         return itemsSpecifications;
+    }
+
+    public static ArrayList<String[]> parseSuitcasesFromFile(String wholeFile){
+        ArrayList<String[]> suitcaseSpecifications = new ArrayList<>();
+        String[] lines = wholeFile.split("\n");
+        for(String str: lines){
+            suitcaseSpecifications.add(str.split("\t"));
+        }
+        return suitcaseSpecifications;
     }
 
 }

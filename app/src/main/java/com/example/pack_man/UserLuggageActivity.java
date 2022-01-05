@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,7 +38,17 @@ public class UserLuggageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_luggage);
 
-        suitcaseList = SuitcaseList.getSuitCaseList();
+
+        String nowy_wyjazd = getPreference("NOWY_WYJAZD");
+        if(nowy_wyjazd.equals("TAK")) {
+            suitcaseList = SuitcaseList.getSuitCaseList();
+        }
+        else if(nowy_wyjazd.equals("NIE")){
+            suitcaseList = SuitcaseList.getSuitCaseList();
+            SuitcaseList.updateSuitcaseData(TripDataParser.parseSuitcasesFromFile(loadSuitcaseDataFromFile()));
+        }
+        
+        //suitcaseList = SuitcaseList.getSuitCaseList();
 
         CustomListAdapter adapter = new CustomListAdapter(this, suitcaseList);
         ListView suitcaseListView = findViewById(R.id.suitcaseListID);
@@ -89,14 +100,20 @@ public class UserLuggageActivity extends AppCompatActivity {
     }
 
     public void testFileSaving(View view){
-        File file= null;
+        File itemsFile= null;
+        File suitcaseFile= null;
 
         FileOutputStream fileOutputStream = null;
         try {
-            file = getFilesDir();
+            itemsFile = getFilesDir();
             fileOutputStream = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
             fileOutputStream.write(TripDataParser.parseItemsDataToString().getBytes());
-            Toast.makeText(this, "Saved \n" + "Path --" + file + "\tUserList.txt", Toast.LENGTH_SHORT).show();
+
+            suitcaseFile = getFilesDir();
+            fileOutputStream = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
+            fileOutputStream.write(TripDataParser.parseSuitcaseDataToString().getBytes());
+
+            Toast.makeText(this, "Your trip data has been saved!", Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -108,6 +125,27 @@ public class UserLuggageActivity extends AppCompatActivity {
         }
     }
 
+    public String loadSuitcaseDataFromFile()
+    {
+        StringBuffer buffer = null;
+        try {
+            FileInputStream fileInputStream =  openFileInput("SuitcaseList.txt");
+            int read = -1;
+            buffer = new StringBuffer();
+            while((read =fileInputStream.read())!= -1){
+                buffer.append((char)read);
+            }
+            return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String getPreference(String key) {
+        SharedPreferences sharedPref = getSharedPreferences("GLOBAL_PREFERENCES", Context.MODE_PRIVATE);
+        return sharedPref.getString(key, null);
+    }
 
     public void goToPackingAlgorithm(View view){
         Intent intent = new Intent(this, PackingAlgorithmActivity.class);

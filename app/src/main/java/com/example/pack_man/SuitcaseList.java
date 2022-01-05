@@ -20,4 +20,22 @@ public class SuitcaseList {
         }
         return suitCaseList;
     }
+
+    public static void updateSuitcaseData(ArrayList<String[]> specifications){
+        suitCaseList.remove(suitCaseList.size()-1);
+
+        for(String[] suitcaseSpecification: specifications){
+            String suitcaseInList = suitcaseSpecification[0];
+            String capacityInList = suitcaseSpecification[1];
+            for(int i=0; i<suitCaseList.size(); i++){
+                if(suitCaseList.get(i).getName().equals(suitcaseInList)){
+                    suitCaseList.get(i).setCount(capacityInList);
+                    break;
+                }
+                if( i == suitCaseList.size()-1){
+                    suitCaseList.add(new MyPair(suitcaseInList, capacityInList));
+                }
+            }
+        }
+    }
 }

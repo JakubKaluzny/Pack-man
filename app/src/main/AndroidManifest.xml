@@ -19,6 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".ExpandableListActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".TripDataActivity"
             android:exported="true" />
         <activity

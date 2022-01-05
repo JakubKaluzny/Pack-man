@@ -14,10 +14,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.example.pack_man.BasicList;
@@ -39,6 +42,7 @@ public class ExpandableListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expandable_list);
+
 
         tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
         listDataHeader = BasicList.getListDataHeader();
