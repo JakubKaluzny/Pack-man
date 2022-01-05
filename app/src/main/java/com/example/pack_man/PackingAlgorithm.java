@@ -25,12 +25,12 @@ public class PackingAlgorithm {
         allIndexesCombinations = new ArrayList<>();
         suitcasesCapacity = new ArrayList<>();
         itemsSizes = new LinkedHashMap<String, Double>();
-        itemsSizes.put("Koszulki", 1D);
-        itemsSizes.put("Spodnie", 2D);
+        itemsSizes.put("T-shirts", 1D);
+        itemsSizes.put("Trousers", 2D);
         itemsSizes.put("Power Bank", 0.5);
-        itemsSizes.put("ładowarka do telefonu", 0.2);
-        itemsSizes.put("Szczoteczka do zębów", 0.1);
-        itemsSizes.put("Suszarka do włosów", 1D);
+        itemsSizes.put("Phone charger", 0.2);
+        itemsSizes.put("Toothbrush", 0.1);
+        itemsSizes.put("Hair dryer", 1D);
     }
 
     public String calculateNeedeedSpace(){
@@ -43,7 +43,7 @@ public class PackingAlgorithm {
 
         for (Map.Entry<String, List<MyPair>> entry1 : items.entrySet()){
             for(MyPair pair: entry1.getValue()){
-                if(pair.getName().equals("Dodaj nowy element")){
+                if(pair.getName().equals("Add new element")){
                     continue;
                 }
                 String itemName = pair.getName();
@@ -58,7 +58,7 @@ public class PackingAlgorithm {
         }
 
         for(MyPair pair: suitcaseList) {
-            if (pair.getName().equals("Dodaj nowy element")) {
+            if (pair.getName().equals("Add new element")) {
                 continue;
             }
             Double suitcaseSize = Double.parseDouble(removeLastChar(pair.getCount()));

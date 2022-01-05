@@ -11,12 +11,15 @@
         android:theme="@style/Theme.Packman">
         <activity
             android:name=".PackingAlgorithmActivity"
+            android:parentActivityName=".UserLuggageActivity"
             android:exported="true" />
         <activity
             android:name=".UserLuggageActivity"
+            android:parentActivityName=".ExpandableListActivity"
             android:exported="false" />
         <activity
             android:name=".ExpandableListActivity"
+            android:parentActivityName=".TripDataActivity"
             android:exported="true" />
         <activity
             android:name=".TripDataActivity"

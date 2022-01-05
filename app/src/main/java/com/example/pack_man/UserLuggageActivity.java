@@ -49,7 +49,7 @@ public class UserLuggageActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position + 1 == suitcaseList.size()) {
 
-                    MyPair newElement = new MyPair("Dodaj nowy element", "+");
+                    MyPair newElement = new MyPair("Add new element", "+");
                     TextView count = view.findViewById(R.id.suitcaseCapacityID);
                     TextView name = view.findViewById(R.id.suitcaseNameID);
                     MyPair child = (MyPair) suitcaseList.get(position);
@@ -94,10 +94,9 @@ public class UserLuggageActivity extends AppCompatActivity {
         FileOutputStream fileOutputStream = null;
         try {
             file = getFilesDir();
-            fileOutputStream = openFileOutput("UserList.txt", Context.MODE_PRIVATE); //JEST TEZ MODE_APPEND I KURWA WIESZ CO ROBI
+            fileOutputStream = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
             fileOutputStream.write(TripDataParser.parseItemsDataToString().getBytes());
             Toast.makeText(this, "Saved \n" + "Path --" + file + "\tUserList.txt", Toast.LENGTH_SHORT).show();
-            return;
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

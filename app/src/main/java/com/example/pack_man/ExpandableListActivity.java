@@ -71,7 +71,7 @@ public class ExpandableListActivity extends Activity {
 
                 if (listAdapter.getChildId(groupPosition, childPosition) + 1 == listAdapter.getChildrenCount(groupPosition)) {
                 //if (childPosition + 1 == listAdapter.getChildrenCount(groupPosition)) {
-                    MyPair newElement = new MyPair("Dodaj nowy element", "+");
+                    MyPair newElement = new MyPair("Add new element", "+");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.popup_on_last_list_click, null);

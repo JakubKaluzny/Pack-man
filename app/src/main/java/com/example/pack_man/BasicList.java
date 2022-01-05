@@ -18,9 +18,9 @@ public class BasicList {
         if (!listAlreadySet) {
             listAlreadySet = true;
             listDataHeader = new ArrayList<String>();
-            listDataHeader.add("Ubrania");
-            listDataHeader.add("Sprzet elektroniczny");
-            listDataHeader.add("Akcesoria");
+            listDataHeader.add("Clothes");
+            listDataHeader.add("Electronic devices");
+            listDataHeader.add("Accesories");
         }
         return listDataHeader;
     }
@@ -30,19 +30,19 @@ public class BasicList {
             mapAlreadySet = true;
             listDataChild = new HashMap<String, List<MyPair>>();
             List<MyPair> ubrania = new ArrayList<MyPair>();
-            ubrania.add(new MyPair("Koszulki", "" + (tripLength)));
-            ubrania.add(new MyPair("Spodnie", "" + (tripLength)));
-            ubrania.add(new MyPair("Dodaj nowy element", "+"));
+            ubrania.add(new MyPair("T-shirts", "" + (tripLength)));
+            ubrania.add(new MyPair("Trousers", "" + (tripLength)));
+            ubrania.add(new MyPair("Add new element", "+"));
 
             List<MyPair> sprzet_elekt = new ArrayList<MyPair>();
             sprzet_elekt.add(new MyPair("Power Bank", "1"));
-            sprzet_elekt.add(new MyPair("ładowarka do telefonu", "1"));
-            sprzet_elekt.add(new MyPair("Dodaj nowy element", "+"));
+            sprzet_elekt.add(new MyPair("Phone charger", "1"));
+            sprzet_elekt.add(new MyPair("Add new element", "+"));
 
             List<MyPair> akcesoria = new ArrayList<MyPair>();
-            akcesoria.add(new MyPair("Szczoteczka do zębów", "1"));
-            akcesoria.add(new MyPair("Suszarka do włosów", "1"));
-            akcesoria.add(new MyPair("Dodaj nowy element", "+"));
+            akcesoria.add(new MyPair("Toothbrush", "1"));
+            akcesoria.add(new MyPair("Hair dryer", "1"));
+            akcesoria.add(new MyPair("Add new element", "+"));
 
             listDataChild.put(listDataHeader.get(0), ubrania); // Header, Child data
             listDataChild.put(listDataHeader.get(1), sprzet_elekt);
@@ -56,6 +56,9 @@ public class BasicList {
     }
 
     public static void updateListData(ArrayList<String[]> specifications){
+        for (Map.Entry<String, List<MyPair>> entry : listDataChild.entrySet()) {
+            entry.getValue().remove(entry.getValue().size()-1);
+        }
         for(String[] itemsSpecifications: specifications){
             String categoryInList = itemsSpecifications[0];
             String itemInList = itemsSpecifications[1];
