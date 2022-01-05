@@ -1,5 +1,6 @@
 package com.example.pack_man;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,26 +36,40 @@ import java.util.List;
 public class UserLuggageActivity extends AppCompatActivity {
 
     private ArrayList suitcaseList;
+    CustomListAdapter adapter;
+    ListView suitcaseListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_luggage);
 
+        if(BasicList.wasSaved && SuitcaseList.wasSaved){
+            TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
+            text1.setVisibility(View.INVISIBLE);
+        }
+        if(BasicList.wasChanged && SuitcaseList.wasChanged){
+            TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
+            text1.setVisibility(View.VISIBLE);
+        }
 
-        String nowy_wyjazd = getPreference("NOWY_WYJAZD");
-        if(nowy_wyjazd.equals("TAK")) {
-            suitcaseList = SuitcaseList.getSuitCaseList();
-        }
-        else if(nowy_wyjazd.equals("NIE")){
-            suitcaseList = SuitcaseList.getSuitCaseList();
-            SuitcaseList.updateSuitcaseData(TripDataParser.parseSuitcasesFromFile(loadSuitcaseDataFromFile()));
-        }
-        
+//        String nowy_wyjazd = getPreference("NOWY_WYJAZD");
+//        if(nowy_wyjazd.equals("TAK") || SuitcaseList.wasReseted) {
+//            suitcaseList = SuitcaseList.getSuitCaseList();
+//            SuitcaseList.wasReseted = false;
+//        }
+//        else if(nowy_wyjazd.equals("NIE")){
+//            suitcaseList = SuitcaseList.getSuitCaseList();
+//            SuitcaseList.updateSuitcaseData(TripDataParser.parseSuitcasesFromFile(loadSuitcaseDataFromFile()));
+//        }
+
+        suitcaseList = SuitcaseList.getSuitCaseList();
+        SuitcaseList.updateSuitcaseData(TripDataParser.parseSuitcasesFromFile(loadSuitcaseDataFromFile()));
+
         //suitcaseList = SuitcaseList.getSuitCaseList();
 
-        CustomListAdapter adapter = new CustomListAdapter(this, suitcaseList);
-        ListView suitcaseListView = findViewById(R.id.suitcaseListID);
+        /*CustomListAdapter*/ adapter = new CustomListAdapter(this, suitcaseList);
+        /*ListView*/ suitcaseListView = findViewById(R.id.suitcaseListID);
         suitcaseListView.setAdapter(adapter);
 
 
@@ -66,13 +84,15 @@ public class UserLuggageActivity extends AppCompatActivity {
                     MyPair child = (MyPair) suitcaseList.get(position);
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.popup_on_last_list_click, null);
+                    View popupView = inflater.inflate(R.layout.popup_on_last_suitcase_click, null);
                     EditText newCount = popupView.findViewById(R.id.newCountID);
                     newCount.setText(count.getText().toString());
-                    if (count.getText() == "+")
-                        newCount.setText("");
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    //if (count.getText() == "+")
+                    newCount.setText("");
+                    //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int width = 700;
+                    int height = 1100;
                     boolean focusable = true;
                     final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
                     popupWindow.setElevation(50);
@@ -85,13 +105,31 @@ public class UserLuggageActivity extends AppCompatActivity {
                             String newCount = inputline1.getText().toString();
                             EditText inputline2 = popupView.findViewById(R.id.newNameID);
                             String newName = inputline2.getText().toString();
-                            child.setCount(newCount + "L");
-                            count.setText(child.getCount());
-                            child.setName(newName);
-                            name.setText(child.getName());
-                            popupWindow.dismiss();
-                            suitcaseList.add(newElement);
-                            recreate();
+                            if(isNumeric(newCount) && newCount.length()<=3 && !newName.equals("")){
+                                child.setCount(newCount + "L");
+                                count.setText(child.getCount());
+                                child.setName(newName);
+                                name.setText(child.getName());
+                                popupWindow.dismiss();
+                                suitcaseList.add(newElement);
+
+                                TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
+                                text1.setVisibility(View.VISIBLE);
+                                BasicList.wasSaved = false;
+                                BasicList.wasChanged = true;
+                                SuitcaseList.wasSaved = false;
+                                SuitcaseList.wasChanged = true;
+
+                                recreate();
+                            }
+                            else{
+                                if(!isNumeric(newCount) || newCount.length()>3){
+                                    inputline1.setError("You have entered\nwrong value!");
+                                }
+                                if(newName.equals("") || newName == null){
+                                    inputline2.setError("You have entered\nwrong value!");
+                                }
+                            }
                         }
                     });
                 }
@@ -99,7 +137,33 @@ public class UserLuggageActivity extends AppCompatActivity {
         });
     }
 
-    public void testFileSaving(View view){
+
+
+    public void resetSuitcaseList(){
+//        SuitcaseList.listAlreadySet = false;
+//        suitcaseList = SuitcaseList.getSuitCaseList();
+//
+//        /*CustomListAdapter*/ adapter = new CustomListAdapter(this, suitcaseList);
+//        /*ListView*/ suitcaseListView = findViewById(R.id.suitcaseListID);
+//        suitcaseListView.setAdapter(adapter);
+//        SuitcaseList.wasReseted = true;
+//        for(int i=0; i<SuitcaseList.suitCaseList.size(); i++){
+//            SuitcaseList.suitCaseList.remove(i);
+//        }
+        SuitcaseList.getSuitCaseList().removeAll(SuitcaseList.suitCaseList);
+        SuitcaseList.suitCaseList.add(new MyPair("Add new element", "+"));
+
+        TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
+        text1.setVisibility(View.VISIBLE);
+        BasicList.wasSaved = false;
+        BasicList.wasChanged = true;
+        SuitcaseList.wasSaved = false;
+        SuitcaseList.wasChanged = true;
+
+        recreate();
+    }
+
+    public void testFileSaving(){
         File itemsFile= null;
         File suitcaseFile= null;
 
@@ -150,5 +214,51 @@ public class UserLuggageActivity extends AppCompatActivity {
     public void goToPackingAlgorithm(View view){
         Intent intent = new Intent(this, PackingAlgorithmActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.itemsList:
+                Intent intent1 = new Intent(this, ExpandableListActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.suitcasesList:
+                return true;
+            case R.id.save:
+                testFileSaving();
+                BasicList.wasSaved = true;
+                BasicList.wasChanged = false;
+                SuitcaseList.wasSaved = true;
+                SuitcaseList.wasChanged = false;
+                TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
+                text1.setVisibility(View.INVISIBLE);
+                return true;
+            case R.id.reset:
+                resetSuitcaseList();
+                return true;
+            case R.id.home:
+                Intent intent2 = new Intent(this, MainActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }

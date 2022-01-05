@@ -13,6 +13,10 @@ public class BasicList {
     static HashMap<String, List<MyPair>> listDataChild;
     static boolean listAlreadySet = false;
     static boolean mapAlreadySet = false;
+    static public boolean wasReseted = false;
+    static public boolean wasSaved = false;
+    static public boolean wasChanged = false;
+    static public boolean wasUpdated = false;
 
     public static List<String> getListDataHeader(){
         if (!listAlreadySet) {
@@ -56,25 +60,28 @@ public class BasicList {
     }
 
     public static void updateListData(ArrayList<String[]> specifications){
-        for (Map.Entry<String, List<MyPair>> entry : listDataChild.entrySet()) {
-            entry.getValue().remove(entry.getValue().size()-1);
-        }
-        for(String[] itemsSpecifications: specifications){
-            String categoryInList = itemsSpecifications[0];
-            String itemInList = itemsSpecifications[1];
-            String countInList = itemsSpecifications[2];
-            System.out.println("\n\n\n\n\n\n" + categoryInList + "\n\n\n\n\n\n\n\n");
-            List<MyPair> items = listDataChild.get(categoryInList);
-            for(int i=0; i<items.size(); i++){
-                if(items.get(i).getName().equals(itemInList)){
-                    items.get(i).setCount(countInList);
-                    break;
-                }
-                if(i == items.size()-1){
-                    items.add(new MyPair(itemInList, countInList));
-                }
+        if(!wasUpdated){
+            wasUpdated = true;
+            for (Map.Entry<String, List<MyPair>> entry : listDataChild.entrySet()) {
+                entry.getValue().remove(entry.getValue().size()-1);
             }
+            for(String[] itemsSpecifications: specifications){
+                String categoryInList = itemsSpecifications[0];
+                String itemInList = itemsSpecifications[1];
+                String countInList = itemsSpecifications[2];
+                System.out.println("\n\n\n\n\n\n" + categoryInList + "\n\n\n\n\n\n\n\n");
+                List<MyPair> items = listDataChild.get(categoryInList);
+                for(int i=0; i<items.size(); i++){
+                    if(items.get(i).getName().equals(itemInList)){
+                        items.get(i).setCount(countInList);
+                        break;
+                    }
+                    if(i == items.size()-1){
+                        items.add(new MyPair(itemInList, countInList));
+                    }
+                }
 
+            }
         }
     }
 }
