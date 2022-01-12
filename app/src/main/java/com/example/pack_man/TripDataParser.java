@@ -13,10 +13,11 @@ import java.util.Map;
 
 
 public class TripDataParser {
-    private static HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
-    private static ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
+//    private static HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
+//    private static ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
 
     public static String parseItemsDataToString(){
+        HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
         StringBuilder data = new StringBuilder();
         for (Map.Entry<String, List<MyPair>> entry : items.entrySet()) {
             String category = entry.getKey();
@@ -33,6 +34,7 @@ public class TripDataParser {
     }
 
     public static String parseSuitcaseDataToString(){
+        ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
         StringBuilder data = new StringBuilder();
         for(MyPair pair: suitcases){
             String suitcase = pair.getName();

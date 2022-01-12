@@ -167,22 +167,27 @@ public class UserLuggageActivity extends AppCompatActivity {
         File itemsFile= null;
         File suitcaseFile= null;
 
-        FileOutputStream fileOutputStream = null;
+        FileOutputStream fileOutputStream1 = null;
+        FileOutputStream fileOutputStream2 = null;
         try {
             itemsFile = getFilesDir();
-            fileOutputStream = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
-            fileOutputStream.write(TripDataParser.parseItemsDataToString().getBytes());
+            fileOutputStream1 = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
+            fileOutputStream1.write(TripDataParser.parseItemsDataToString().getBytes());
 
             suitcaseFile = getFilesDir();
-            fileOutputStream = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
-            fileOutputStream.write(TripDataParser.parseSuitcaseDataToString().getBytes());
+            fileOutputStream2 = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
+            fileOutputStream2.write(TripDataParser.parseSuitcaseDataToString().getBytes());
 
             Toast.makeText(this, "Your trip data has been saved!", Toast.LENGTH_SHORT).show();
+
+            fileOutputStream1.close();
+            fileOutputStream2.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {
-                fileOutputStream.close();
+                fileOutputStream1.close();
+                fileOutputStream2.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -245,6 +250,12 @@ public class UserLuggageActivity extends AppCompatActivity {
                 resetSuitcaseList();
                 return true;
             case R.id.home:
+                BasicList.mapAlreadySet = false;
+                SuitcaseList.listAlreadySet = false;
+                BasicList.wasUpdated = false;
+                SuitcaseList.wasUpdated = false;
+                BasicList.wasChanged = false;
+                SuitcaseList.wasChanged = false;
                 Intent intent2 = new Intent(this, MainActivity.class);
                 startActivity(intent2);
                 return true;
