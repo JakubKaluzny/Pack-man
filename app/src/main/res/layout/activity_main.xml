@@ -4,33 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        android:stateListAnimator="@null"
+        app:backgroundTint="@android:color/transparent"
+        app:strokeColor="@color/orange_light"
+        app:strokeWidth="2dp"
         android:id="@+id/tripDataButton"
         android:layout_width="265dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="30dp"
         android:onClick="goToLastTripDataActivity"
         android:text="Load last trip"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TripDataButton"
         tools:ignore="UsingOnClickInXml" />
 
     <Button
         android:id="@+id/TripDataButton"
         android:layout_width="265dp"
         android:layout_height="55dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginBottom="10dp"
         android:onClick="goToNewTripDataActivity"
         android:text="Create new trip"
         app:layout_constraintBottom_toTopOf="@+id/tripDataButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UsingOnClickInXml" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="403dp"
+        android:layout_height="408dp"
+        app:layout_constraintBottom_toTopOf="@+id/TripDataButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

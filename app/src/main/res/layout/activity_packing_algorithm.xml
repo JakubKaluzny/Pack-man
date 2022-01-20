@@ -6,10 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".PackingAlgorithmActivity">
 
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/img_overlay"
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_background" />
+
+        <LinearLayout
+            android:id="@+id/your_actual_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="403dp"
+        android:layout_height="408dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textListTestID"
+        app:srcCompat="@drawable/logo_suitcase" />
+
     <TextView
         android:id="@+id/textListTestID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textSize="24dip"
+        android:textColor="@color/red_dark"
+        android:textStyle="bold"
         android:text="test"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

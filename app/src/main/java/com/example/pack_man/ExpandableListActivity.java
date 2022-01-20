@@ -80,10 +80,6 @@ public class ExpandableListActivity extends AppCompatActivity {
         }
 
 
-        TextView test = findViewById(R.id.test);
-        test.setText(nowy_wyjazd);
-
-
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
         expListView.setAdapter(listAdapter);
