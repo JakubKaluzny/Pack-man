@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,36 +36,34 @@ public class PackingAlgorithmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_packing_algorithm);
 
-//        tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
-//        listDataHeader = BasicList.getListDataHeader();
-//        listDataChild = BasicList.getListDataChild(tripLength);
-//
-//        suitcaseList = SuitcaseList.getSuitCaseList();
-
-//        String wholeList = "";
-
-//        for (Map.Entry<String, List<MyPair>> entry : listDataChild.entrySet()){
-//            for(MyPair pair: entry.getValue()){
-//                if(pair.getName().equals("Dodaj nowy element")){
-//                    continue;
-//                }
-//                wholeList = wholeList + entry.getKey() + " " + pair.getName() + " " + pair.getCount() + "\n";
-//            }
-//        }
-
-//        for(MyPair pair: suitcaseList) {
-//            if (pair.getName().equals("Dodaj nowy element")) {
-//                continue;
-//            }
-//            wholeList = wholeList + pair.getName() + " " + pair.getCount() + "\n";
-//        }
-
         PackingAlgorithm packingAlgorithm = new PackingAlgorithm();
         String userItemsSpace = packingAlgorithm.calculateNeedeedSpace();
-        //String userItemsSpace = "siema";
 
-        TextView text = findViewById(R.id.textListTestID);
-        text.setText(userItemsSpace.toString());
+        if(userItemsSpace.equals("Not enough space")){
+            findViewById(R.id.successImageID).setVisibility(View.GONE);
+            findViewById(R.id.successText1ID).setVisibility(View.GONE);
+            findViewById(R.id.successText2ID).setVisibility(View.GONE);
+            findViewById(R.id.successText3ID).setVisibility(View.GONE);
+
+            findViewById(R.id.failureImageID).setVisibility(View.VISIBLE);
+            findViewById(R.id.failureText1ID).setVisibility(View.VISIBLE);
+            findViewById(R.id.failureText2ID).setVisibility(View.VISIBLE);
+            findViewById(R.id.failureText3ID).setVisibility(View.VISIBLE);
+        }
+        else{
+            findViewById(R.id.failureImageID).setVisibility(View.GONE);
+            findViewById(R.id.failureText1ID).setVisibility(View.GONE);
+            findViewById(R.id.failureText2ID).setVisibility(View.GONE);
+            findViewById(R.id.failureText3ID).setVisibility(View.GONE);
+
+            findViewById(R.id.successImageID).setVisibility(View.VISIBLE);
+            findViewById(R.id.successText1ID).setVisibility(View.VISIBLE);
+            findViewById(R.id.successText2ID).setVisibility(View.VISIBLE);
+            findViewById(R.id.successText3ID).setVisibility(View.VISIBLE);
+
+            TextView text = findViewById(R.id.successText3ID);
+            text.setText(userItemsSpace);
+        }
     }
 
     private String getPreference(String key) {

@@ -17,7 +17,7 @@ public class TripDataParser {
 //    private static ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
 
     public static String parseItemsDataToString(){
-        HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0);
+        HashMap<String, List<MyPair>> items = BasicList.getListDataChild(0, "");
         StringBuilder data = new StringBuilder();
         for (Map.Entry<String, List<MyPair>> entry : items.entrySet()) {
             String category = entry.getKey();

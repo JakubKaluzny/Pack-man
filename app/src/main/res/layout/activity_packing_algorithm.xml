@@ -27,27 +27,112 @@
 
         </LinearLayout>
 
+
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="403dp"
-        android:layout_height="408dp"
+        android:id="@+id/failureImageID"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textListTestID"
-        app:srcCompat="@drawable/logo_suitcase" />
+        app:layout_constraintTop_toBottomOf="@+id/failureText1ID"
+        app:srcCompat="@drawable/failure" />
 
     <TextView
-        android:id="@+id/textListTestID"
+        android:id="@+id/failureText1ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:textSize="24dip"
+        android:layout_marginTop="10dp"
+        android:text="Unfortunatelly..."
         android:textColor="@color/red_dark"
-        android:textStyle="bold"
-        android:text="test"
+        android:textSize="34sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/failureText2ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Your suitcases are too small"
+        android:textColor="@color/red_dark"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/failureImageID" />
+
+    <TextView
+        android:id="@+id/failureText3ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Try to add more in Suitcases list"
+        android:textColor="@color/red_dark"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/failureText2ID" />
+
+
+
+
+
+    <TextView
+        android:id="@+id/successText1ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Success!"
+        android:textColor="@color/red_dark"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/successImageID"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/successText1ID"
+        app:srcCompat="@drawable/success" />
+
+    <TextView
+        android:id="@+id/successText2ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="You are able to pack using:"
+        android:textColor="@color/red_dark"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/successImageID" />
+
+    <TextView
+        android:id="@+id/successText3ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="lorem ipsum"
+        android:textAlignment="center"
+        android:textColor="@color/red_dark"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/successText2ID" />
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,6 +45,7 @@ public class ExpandableListActivity extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     int tripLength;
+    String season;
     List<String> listDataHeader;
     HashMap<String, List<MyPair>> listDataChild;
     Context context = this;
@@ -66,16 +67,17 @@ public class ExpandableListActivity extends AppCompatActivity {
 
 
         tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
+        season = getPreference("PORA_ROKU");
         listDataHeader = BasicList.getListDataHeader();
 
 
         String nowy_wyjazd = getPreference("NOWY_WYJAZD");
         if(nowy_wyjazd.equals("TAK") || BasicList.wasReseted) {
-            listDataChild = BasicList.getListDataChild(tripLength);
+            listDataChild = BasicList.getListDataChild(tripLength, season);
             BasicList.wasReseted = false;
         }
         else if(nowy_wyjazd.equals("NIE")){
-            listDataChild = BasicList.getListDataChild(0);
+            listDataChild = BasicList.getListDataChild(0, "");
             BasicList.updateListData(TripDataParser.parseItemsFromFile(loadListDataFromFile()));
         }
 
@@ -246,7 +248,7 @@ public class ExpandableListActivity extends AppCompatActivity {
         BasicList.listAlreadySet = false;
         BasicList.mapAlreadySet = false;
         listDataHeader = BasicList.getListDataHeader();
-        listDataChild = BasicList.getListDataChild(tripLength);
+        listDataChild = BasicList.getListDataChild(tripLength, season);
 
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);

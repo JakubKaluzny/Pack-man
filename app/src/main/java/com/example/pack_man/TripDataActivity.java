@@ -1,15 +1,16 @@
 package com.example.pack_man;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,11 +22,10 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 public class TripDataActivity extends AppCompatActivity {
 
-    TextView textDate;
+    TextView seasonText;
     Button selectDate;
     String season;
     Long start;
@@ -36,7 +36,7 @@ public class TripDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_data);
 
-        textDate = findViewById(R.id.tripDateID);
+        seasonText = findViewById(R.id.seasonID);
         selectDate = findViewById(R.id.choseDateButtonID);
 
         MaterialDatePicker datePicker = MaterialDatePicker.Builder.dateRangePicker()
@@ -50,6 +50,7 @@ public class TripDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 datePicker.show(getSupportFragmentManager(), "Material_Range");
                 datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onPositiveButtonClick(Object selection) {
@@ -61,10 +62,17 @@ public class TripDataActivity extends AppCompatActivity {
                         LocalDate le = Instant.ofEpochMilli(end).atZone(ZoneId.systemDefault()).toLocalDate();
 
                         season = DateAnalizer.getSeason(ld);
-                        String str = season + " Duration " + DateAnalizer.getDurationInDays(ld,le)+" days";
-                        EditText textEdit = findViewById(R.id.dlugoscWyjazduID);
-                        textEdit.setText(String.valueOf(DateAnalizer.getDurationInDays(ld,le)));
-                        textDate.setText(str);
+                        //String str = season + " Duration " + DateAnalizer.getDurationInDays(ld,le)+" days";
+                        TextView tripLengthText = findViewById(R.id.tripLengthID);
+                        tripLengthText.setText(String.valueOf(DateAnalizer.getDurationInDays(ld,le)) + " days");
+                        tripLengthText.setTextColor(Color.parseColor("#660000"));
+                        tripLengthText.setTextSize(24);
+                        seasonText.setText(season);
+                        seasonText.setTextColor(Color.parseColor("#660000"));
+                        seasonText.setTextSize(24);
+                        TextView tripLen = findViewById(R.id.tripLengthID);
+                        tripLen.setError(null);
+                        seasonText.setError(null);
                     }
                 });
             }
@@ -91,15 +99,21 @@ public class TripDataActivity extends AppCompatActivity {
 
     public void goToExpandableListActivity(View view){
         Intent intent = new Intent(this, ExpandableListActivity.class);
-        EditText inputline = findViewById(R.id.dlugoscWyjazduID);
-        String strInputline = inputline.getText().toString();
-        if(isNumeric(strInputline) && strInputline.length() <= 2){
-            setPreference("DLUGOSC_WYJAZDU", inputline.getText().toString());
+        TextView tripLengthText = findViewById(R.id.tripLengthID);
+        String str = tripLengthText.getText().toString();
+        String[] days = str.split(" ");
+        if(!tripLengthText.getText().toString().equals("trip length will be shown here") && !seasonText.getText().toString().equals("season will be shown here")){
+            setPreference("DLUGOSC_WYJAZDU", days[0]);
             setPreference("PORA_ROKU",season);
             startActivity(intent);
         }
         else{
-            inputline.setError("You have entered wrong value!");
+            tripLengthText.setError("You haven't entered date!");
+            tripLengthText.setText("You haven't entered date!");
+            tripLengthText.setTextColor(Color.RED);
+            seasonText.setError("You haven't entered data!");
+            seasonText.setText("You haven't entered date!");
+            seasonText.setTextColor(Color.RED);
         }
     }
 

@@ -14,6 +14,7 @@ public class PackingAlgorithm {
     private List<Double> suitcasesCapacity;
 
     private int tripLength;
+    private String season;
     private List<String> categories;
     private HashMap<String, List<MyPair>> items;
 
@@ -25,17 +26,57 @@ public class PackingAlgorithm {
         allIndexesCombinations = new ArrayList<>();
         suitcasesCapacity = new ArrayList<>();
         itemsSizes = new LinkedHashMap<String, Double>();
-        itemsSizes.put("T-shirts", 1D);
-        itemsSizes.put("Trousers", 2D);
-        itemsSizes.put("Power Bank", 0.5);
-        itemsSizes.put("Phone charger", 0.2);
-        itemsSizes.put("Toothbrush", 0.1);
-        itemsSizes.put("Hair dryer", 1D);
+        itemsSizes.put("T-shirts", 0.8D);
+        itemsSizes.put("Shirt", 1.3D);
+        itemsSizes.put("Wool sweater", 6D);
+        itemsSizes.put("Cotton sweater", 5D);
+        itemsSizes.put("Hoodie", 5D);
+        itemsSizes.put("Trousers", 2.5D);
+        itemsSizes.put("Shorts", 1.5D);
+        itemsSizes.put("Swimsuit", 0.8D);
+        itemsSizes.put("Winter jacket", 14D);
+        itemsSizes.put("Light jacket", 9D);
+        itemsSizes.put("Coat", 12D);
+        itemsSizes.put("Socks", 0.2D);
+        itemsSizes.put("Underwear", 0.2D);
+        itemsSizes.put("Boots", 3D);
+
+        itemsSizes.put("ID card", 0.015D);
+        itemsSizes.put("Driving licence", 0.015D);
+        itemsSizes.put("Passport", 0.015D);
+        itemsSizes.put("Bank card", 0.015D);
+
+        itemsSizes.put("Watch", 0.1D);
+        itemsSizes.put("Sunglasses", 0.2D);
+        itemsSizes.put("Scarf", 1D);
+        itemsSizes.put("Hat", 0.5D);
+        itemsSizes.put("Gloves", 0.2D);
+        itemsSizes.put("Belt", 0.2D);
+        itemsSizes.put("Hairbrush", 0.15D);
+
+        itemsSizes.put("Earphones", 0.05D);
+        itemsSizes.put("Phone charger", 0.1D);
+        itemsSizes.put("Phone", 0.3D);
+        itemsSizes.put("Camera", 0.8D);
+        itemsSizes.put("Laptop", 3.5D);
+
+        itemsSizes.put("Bandage", 0.1D);
+        itemsSizes.put("Protective mask", 0.05D);
+        itemsSizes.put("Painkillers", 0.1D);
+        itemsSizes.put("Disinfectant liquid", 0.05D);
+
+        itemsSizes.put("Shampoo", 0.2D);
+        itemsSizes.put("Soap", 0.2D);
+        itemsSizes.put("Towel", 4D);
+        itemsSizes.put("Toothbrush", 0.05D);
+        itemsSizes.put("Toothpaste", 0.07D);
+
+        itemsSizes.put("Tissues", 0.1D);
     }
 
     public String calculateNeedeedSpace(){
         categories = BasicList.getListDataHeader();
-        items = BasicList.getListDataChild(tripLength);
+        items = BasicList.getListDataChild(tripLength, season);
 
         suitcaseList = SuitcaseList.getSuitCaseList();
 
@@ -112,7 +153,7 @@ public class PackingAlgorithm {
             }
         }
         if(bestDistance == 5000D){
-            return "Kup se torbe gosciu";
+            return "Not enough space";
         }
         String bestIndexes = allIndexesCombinations.get(indexOfBestDistance);
         String bestSuitcases = "";
@@ -126,7 +167,12 @@ public class PackingAlgorithm {
             for(int i=0 ;i<valueSplited.length;i++){
                 int index = Integer.parseInt(valueSplited[i]);
                 MyPair suitcase = realSuitcaseList.get(index);
-                bestSuitcases = bestSuitcases + suitcase.getName() + " ";
+                if(i == valueSplited.length - 1){
+                    bestSuitcases = bestSuitcases + suitcase.getName();
+                }
+                else{
+                    bestSuitcases = bestSuitcases + suitcase.getName() + ", ";
+                }
             }
         }
 
