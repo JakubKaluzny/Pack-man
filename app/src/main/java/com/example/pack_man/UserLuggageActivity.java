@@ -46,7 +46,7 @@ public class UserLuggageActivity extends AppCompatActivity {
 
         if(BasicList.wasSaved && SuitcaseList.wasSaved){
             TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
-            text1.setVisibility(View.INVISIBLE);
+            text1.setVisibility(View.GONE);
         }
         if(BasicList.wasChanged && SuitcaseList.wasChanged){
             TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
@@ -244,7 +244,7 @@ public class UserLuggageActivity extends AppCompatActivity {
                 SuitcaseList.wasSaved = true;
                 SuitcaseList.wasChanged = false;
                 TextView text1 = findViewById(R.id.suitcasesListUnsavedID);
-                text1.setVisibility(View.INVISIBLE);
+                text1.setVisibility(View.GONE);
                 return true;
             case R.id.reset:
                 resetSuitcaseList();

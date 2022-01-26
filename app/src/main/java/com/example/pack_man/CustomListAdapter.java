@@ -1,6 +1,8 @@
 package com.example.pack_man;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,21 @@ public class CustomListAdapter extends ArrayAdapter<MyPair> {
         // then according to the position of the view assign the desired TextView 2 for the same
         TextView capacity = currentItemView.findViewById(R.id.suitcaseCapacityID);
         capacity.setText(arrayList.get(position).getCount());
+
+        if(position == arrayList.size()-1){
+            name.setTextColor(Color.parseColor("#FF3333"));
+            capacity.setTextColor(Color.parseColor("#FF3333"));
+            name.setTypeface(Typeface.DEFAULT);
+            capacity.setTypeface(Typeface.DEFAULT);
+            capacity.setTextSize(24);
+        }
+        else{
+            name.setTextColor(Color.parseColor("#660000"));
+            capacity.setTextColor(Color.parseColor("#660000"));
+            name.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            capacity.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            capacity.setTextSize(14);
+        }
 
         // then return the recyclable view
         return currentItemView;

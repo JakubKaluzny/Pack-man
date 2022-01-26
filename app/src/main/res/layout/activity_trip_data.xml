@@ -38,6 +38,7 @@
         android:text="Length of your trip:"
         android:textColor="@color/black"
         android:textSize="20sp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,6 +87,7 @@
         android:layout_marginBottom="20dp"
         android:onClick="goToExpandableListActivity"
         android:text="NEXT"
+        android:textStyle="bold"
         android:textColor="@color/orange_dark"
         app:backgroundTint="@android:color/holo_orange_light"
         app:cornerRadius="25dp"
@@ -98,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
         android:text="Chose trip date"
+        android:textStyle="bold"
         android:textColor="@color/orange_dark"
         app:backgroundTint="@android:color/holo_orange_light"
         app:cornerRadius="25dp"

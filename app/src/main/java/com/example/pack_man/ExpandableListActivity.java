@@ -58,7 +58,7 @@ public class ExpandableListActivity extends AppCompatActivity {
 
         if(BasicList.wasSaved && SuitcaseList.wasSaved){
             TextView text1 = findViewById(R.id.itemsListUnsavedID);
-            text1.setVisibility(View.INVISIBLE);
+            text1.setVisibility(View.GONE);
         }
         if(BasicList.wasChanged && SuitcaseList.wasChanged){
             TextView text1 = findViewById(R.id.itemsListUnsavedID);
@@ -85,6 +85,7 @@ public class ExpandableListActivity extends AppCompatActivity {
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild/*, "5"*/);
         expListView.setAdapter(listAdapter);
+
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -341,7 +342,7 @@ public class ExpandableListActivity extends AppCompatActivity {
                 SuitcaseList.wasSaved = true;
                 SuitcaseList.wasChanged = false;
                 TextView text1 = findViewById(R.id.itemsListUnsavedID);
-                text1.setVisibility(View.INVISIBLE);
+                text1.setVisibility(View.GONE);
                 return true;
             case R.id.reset:
                 resetExpandableList();
