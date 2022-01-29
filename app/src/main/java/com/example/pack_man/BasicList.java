@@ -2,21 +2,34 @@ package com.example.pack_man;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BasicList {
     static List<String> listDataHeader;
     static HashMap<String, List<MyPair>> listDataChild;
+    public static List<Pair<Long, Long>> mCheckedItems;
     static boolean listAlreadySet = false;
     static boolean mapAlreadySet = false;
+    static boolean checkListAlreadySet = false;
     static public boolean wasReseted = false;
     static public boolean wasSaved = false;
     static public boolean wasChanged = false;
     static public boolean wasUpdated = false;
+    static public boolean checkboxFlag = false;
+
+    public static void getmCheckedItems(){
+        if(!checkListAlreadySet){
+            checkListAlreadySet = true;
+            mCheckedItems = new ArrayList<Pair<Long, Long>>();
+        }
+    }
 
     public static List<String> getListDataHeader(){
         if (!listAlreadySet) {
@@ -315,7 +328,6 @@ public class BasicList {
                 String categoryInList = itemsSpecifications[0];
                 String itemInList = itemsSpecifications[1];
                 String countInList = itemsSpecifications[2];
-                System.out.println("\n\n\n\n\n\n" + categoryInList + "\n\n\n\n\n\n\n\n");
                 List<MyPair> items = listDataChild.get(categoryInList);
                 for(int i=0; i<items.size(); i++){
                     if(items.get(i).getName().equals(itemInList)){
@@ -327,6 +339,20 @@ public class BasicList {
                     }
                 }
 
+            }
+        }
+    }
+
+    public static void updateCheckboxesListData(ArrayList<String[]> specifications){
+        if(!checkboxFlag){
+            checkboxFlag = true;
+
+            mCheckedItems = new ArrayList<Pair<Long, Long>>();
+            for(String[] data: specifications){
+                Long group = Long.parseLong(data[0]);
+                Long position = Long.parseLong(data[1]);
+                Pair<Long, Long> pair = new Pair<>(group, position);
+                mCheckedItems.add(pair);
             }
         }
     }

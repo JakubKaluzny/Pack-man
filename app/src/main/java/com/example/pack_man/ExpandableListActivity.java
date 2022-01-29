@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +66,6 @@ public class ExpandableListActivity extends AppCompatActivity {
             text1.setVisibility(View.VISIBLE);
         }
 
-
         tripLength = Integer.parseInt(getPreference("DLUGOSC_WYJAZDU"));
         season = getPreference("PORA_ROKU");
         listDataHeader = BasicList.getListDataHeader();
@@ -74,11 +74,13 @@ public class ExpandableListActivity extends AppCompatActivity {
         String nowy_wyjazd = getPreference("NOWY_WYJAZD");
         if(nowy_wyjazd.equals("TAK") || BasicList.wasReseted) {
             listDataChild = BasicList.getListDataChild(tripLength, season);
+            BasicList.getmCheckedItems();
             BasicList.wasReseted = false;
         }
         else if(nowy_wyjazd.equals("NIE")){
             listDataChild = BasicList.getListDataChild(0, "");
             BasicList.updateListData(TripDataParser.parseItemsFromFile(loadListDataFromFile()));
+            BasicList.updateCheckboxesListData(TripDataParser.parseCheckboxesFromFile(loadCheckboxesFromFile()));
         }
 
 
@@ -262,12 +264,43 @@ public class ExpandableListActivity extends AppCompatActivity {
         BasicList.wasChanged = true;
         SuitcaseList.wasSaved = false;
         SuitcaseList.wasChanged = true;
+
+        BasicList.mCheckedItems.clear();
+
         recreate();
     }
 
     public void goToUserLuggage(View view){
         Intent intent = new Intent(this, UserLuggageActivity.class);
         startActivity(intent);
+//        try{
+//            FileInputStream fileInputStream =  openFileInput("SuitcaseList.txt");
+//        }
+//        catch(Exception e1){
+//            File file = getFilesDir();
+//            try{
+//                FileOutputStream fileOutputStream = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
+//            }
+//            catch(Exception e2){
+//                System.exit(9);
+//            }
+//        }
+    }
+
+    public String loadCheckboxesFromFile(){
+        StringBuffer buffer = null;
+        try {
+            FileInputStream fileInputStream =  openFileInput("CheckboxList.txt");
+            int read = -1;
+            buffer = new StringBuffer();
+            while((read =fileInputStream.read())!= -1){
+                buffer.append((char)read);
+            }
+            return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public String loadListDataFromFile()
@@ -290,9 +323,11 @@ public class ExpandableListActivity extends AppCompatActivity {
     public void testFileSaving(){
         File itemsFile= null;
         File suitcaseFile= null;
+        File checkBoxesFile= null;
 
         FileOutputStream fileOutputStream1 = null;
         FileOutputStream fileOutputStream2 = null;
+        FileOutputStream fileOutputStream3 = null;
         try {
             itemsFile = getFilesDir();
             fileOutputStream1 = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
@@ -302,17 +337,23 @@ public class ExpandableListActivity extends AppCompatActivity {
             fileOutputStream2 = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
             fileOutputStream2.write(TripDataParser.parseSuitcaseDataToString().getBytes());
 
+            checkBoxesFile = getFilesDir();
+            fileOutputStream3 = openFileOutput("CheckboxList.txt", Context.MODE_PRIVATE);
+            fileOutputStream3.write(TripDataParser.parseCheckBoxesToString().getBytes());
+
             //Toast.makeText(this, "Your trip data has been saved!", Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(),"Your trip data has been saved!",Toast.LENGTH_SHORT).show();
 
             fileOutputStream1.close();
             fileOutputStream2.close();
+            fileOutputStream3.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {
                 fileOutputStream1.close();
                 fileOutputStream2.close();
+                fileOutputStream3.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -348,10 +389,12 @@ public class ExpandableListActivity extends AppCompatActivity {
                 resetExpandableList();
                 return true;
             case R.id.home:
+                BasicList.mCheckedItems.clear();
                 BasicList.mapAlreadySet = false;
                 SuitcaseList.listAlreadySet = false;
                 BasicList.wasUpdated = false;
                 SuitcaseList.wasUpdated = false;
+                BasicList.checkboxFlag = false;
                 BasicList.wasChanged = false;
                 SuitcaseList.wasChanged = false;
                 Intent intent2 = new Intent(this, MainActivity.class);

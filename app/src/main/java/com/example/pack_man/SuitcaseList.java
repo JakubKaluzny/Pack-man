@@ -26,6 +26,10 @@ public class SuitcaseList {
     }
 
     public static void updateSuitcaseData(ArrayList<String[]> specifications){
+        if(specifications==null){
+            getSuitCaseList();
+            return;
+        }
         if (!wasUpdated){
             wasUpdated = true;
             suitCaseList.remove(suitCaseList.size()-1);

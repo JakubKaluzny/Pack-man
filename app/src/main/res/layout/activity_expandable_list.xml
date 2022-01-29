@@ -9,6 +9,7 @@
     tools:context=".ExpandableListActivity">-->
 
     <FrameLayout
+        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,6 +28,7 @@
             android:orientation="vertical">
 
         </LinearLayout>
+
 
     </FrameLayout>
 
@@ -69,6 +71,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:tooltipText="Use checkboxes to define if\nyour items are packed or not"
+        app:layout_constraintBottom_toTopOf="@+id/lvExp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout3"
+        app:srcCompat="@android:drawable/ic_dialog_info"
+        app:tint="@android:color/holo_orange_dark" />
 
     <TextView
         android:id="@+id/itemsListUnsavedID"

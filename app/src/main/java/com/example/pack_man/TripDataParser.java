@@ -2,6 +2,7 @@ package com.example.pack_man;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import java.io.FileInputStream;
@@ -33,6 +34,16 @@ public class TripDataParser {
         return data.toString();
     }
 
+    public static String parseCheckBoxesToString(){
+        StringBuilder data = new StringBuilder();
+        for(Pair pair: BasicList.mCheckedItems){
+            String group = "" + (Long)pair.first;
+            String position = "" + (Long)pair.second;
+            data.append(group).append("\t").append(position).append("\n");
+        }
+        return data.toString();
+    }
+
     public static String parseSuitcaseDataToString(){
         ArrayList<MyPair> suitcases = SuitcaseList.getSuitCaseList();
         StringBuilder data = new StringBuilder();
@@ -45,6 +56,14 @@ public class TripDataParser {
         return data.toString();
     }
 
+    public static ArrayList<String[]> parseCheckboxesFromFile(String wholeFile){
+        ArrayList<String[]> checkboxes = new ArrayList<>();
+        String[] lines = wholeFile.split("\n");
+        for(String str: lines){
+            checkboxes.add(str.split("\t"));
+        }
+        return checkboxes;
+    }
 
     public static ArrayList<String[]> parseItemsFromFile(String wholeFile){
         ArrayList<String[]> itemsSpecifications = new ArrayList<>();
@@ -57,6 +76,9 @@ public class TripDataParser {
 
     public static ArrayList<String[]> parseSuitcasesFromFile(String wholeFile){
         ArrayList<String[]> suitcaseSpecifications = new ArrayList<>();
+        if(wholeFile.equals("")){
+            return null;
+        }
         String[] lines = wholeFile.split("\n");
         for(String str: lines){
             suitcaseSpecifications.add(str.split("\t"));

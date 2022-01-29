@@ -166,9 +166,11 @@ public class UserLuggageActivity extends AppCompatActivity {
     public void testFileSaving(){
         File itemsFile= null;
         File suitcaseFile= null;
+        File checkBoxesFile= null;
 
         FileOutputStream fileOutputStream1 = null;
         FileOutputStream fileOutputStream2 = null;
+        FileOutputStream fileOutputStream3 = null;
         try {
             itemsFile = getFilesDir();
             fileOutputStream1 = openFileOutput("UserList.txt", Context.MODE_PRIVATE);
@@ -178,25 +180,44 @@ public class UserLuggageActivity extends AppCompatActivity {
             fileOutputStream2 = openFileOutput("SuitcaseList.txt", Context.MODE_PRIVATE);
             fileOutputStream2.write(TripDataParser.parseSuitcaseDataToString().getBytes());
 
+            checkBoxesFile = getFilesDir();
+            fileOutputStream3 = openFileOutput("CheckboxList.txt", Context.MODE_PRIVATE);
+            fileOutputStream3.write(TripDataParser.parseCheckBoxesToString().getBytes());
+
             Toast.makeText(this, "Your trip data has been saved!", Toast.LENGTH_SHORT).show();
 
             fileOutputStream1.close();
             fileOutputStream2.close();
+            fileOutputStream3.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {
                 fileOutputStream1.close();
                 fileOutputStream2.close();
+                fileOutputStream3.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public String loadSuitcaseDataFromFile()
-    {
+    public String loadSuitcaseDataFromFile(){
         StringBuffer buffer = null;
+//        FileInputStream fileInputStream = null;
+//        try{
+//            fileInputStream =  openFileInput("SuitcaseList.txt");
+//        }
+//        catch(Exception e){
+//            try{
+//                File file = new File("SuitcaseList.txt");
+//                file.createNewFile();
+//            }
+//            catch(IOException e2){
+//                System.exit(9);
+//            }
+//        }
+
         try {
             FileInputStream fileInputStream =  openFileInput("SuitcaseList.txt");
             int read = -1;
@@ -206,9 +227,9 @@ public class UserLuggageActivity extends AppCompatActivity {
             }
             return buffer.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return "";
         }
-        return "";
+        //return "";
     }
 
     private String getPreference(String key) {
@@ -250,11 +271,13 @@ public class UserLuggageActivity extends AppCompatActivity {
                 resetSuitcaseList();
                 return true;
             case R.id.home:
+                BasicList.mCheckedItems.clear();
                 BasicList.mapAlreadySet = false;
                 SuitcaseList.listAlreadySet = false;
                 BasicList.wasUpdated = false;
                 SuitcaseList.wasUpdated = false;
                 BasicList.wasChanged = false;
+                BasicList.checkboxFlag = false;
                 SuitcaseList.wasChanged = false;
                 Intent intent2 = new Intent(this, MainActivity.class);
                 startActivity(intent2);

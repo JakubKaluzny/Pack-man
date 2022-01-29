@@ -9,6 +9,11 @@ import android.view.View
 import android.widget.Button
 import android.view.View.inflate
 import android.view.LayoutInflater
+import android.widget.Toast
+import java.io.File
+import java.io.FileInputStream
+import java.lang.Exception
+
 //import com.example.pack_man.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -27,9 +32,23 @@ class MainActivity : AppCompatActivity() {
 
 
     fun goToLastTripDataActivity(view: View) {
-        val intent = Intent(this, ExpandableListActivity::class.java)
-        setPreference("NOWY_WYJAZD", "NIE")
-        startActivity(intent)
+        var isLastTripExisting: Boolean = true
+        try{
+            val fileInputStream1 = openFileInput("UserList.txt")
+            val fileInputStream3 = openFileInput("SuitcaseList.txt")
+        }
+        catch(e: Exception){
+            isLastTripExisting = false
+        }
+        if(isLastTripExisting){
+            val intent = Intent(this, ExpandableListActivity::class.java)
+            setPreference("NOWY_WYJAZD", "NIE")
+            startActivity(intent)
+        }
+        else{
+            Toast.makeText(applicationContext,"You haven't saved any trip yet!",Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 

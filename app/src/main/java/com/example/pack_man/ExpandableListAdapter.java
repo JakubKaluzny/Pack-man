@@ -1,7 +1,9 @@
 package com.example.pack_man;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -42,6 +45,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+//    public static final Set<Pair<Long, Long>> mCheckedItems = new HashSet<Pair<Long, Long>>();
+
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
@@ -70,6 +75,54 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             txtListChild.setTextColor(Color.parseColor("#808080"));
             count.setTextColor(Color.parseColor("#808080"));
             count.setTextSize(14);
+        }
+
+        final CheckBox cb = (CheckBox) convertView.findViewById(R.id.your_checkbox_id);
+        // add tag to remember groupId/childId
+        final Pair<Long, Long> tag = new Pair<Long, Long>(
+                getGroupId(groupPosition),
+                getChildId(groupPosition, childPosition));
+        cb.setTag(tag);
+        // set checked if groupId/childId in checked items
+
+        if(count.getText().toString().equals("0")){
+            //cb.setVisibility(View.GONE);
+            BasicList.mCheckedItems.remove(tag);
+            cb.setChecked(false);
+            cb.setEnabled(false);
+            cb.setAlpha(0.4f);
+        }
+        else{
+            cb.setEnabled(true);
+            cb.setAlpha(1.0f);
+            cb.setChecked(BasicList.mCheckedItems.contains(tag));
+        }
+
+
+        //cb.setChecked(mCheckedItems.contains(tag));
+        // set OnClickListener to handle checked switches
+        cb.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                final CheckBox cb = (CheckBox) v;
+                final Pair<Long, Long> tag = (Pair<Long, Long>) v.getTag();
+                if (cb.isChecked()) {
+                    BasicList.mCheckedItems.add(tag);
+                }
+                else {
+                    BasicList.mCheckedItems.remove(tag);
+                }
+                if(count.getText().toString().equals("0")){
+                    BasicList.mCheckedItems.remove(tag);
+                }
+            }
+        });
+
+        if(childPosition == getChildrenCount(groupPosition)-1){
+            cb.setVisibility(View.GONE);
+        }
+        else{
+            cb.setVisibility(View.VISIBLE);
         }
 
         return convertView;
